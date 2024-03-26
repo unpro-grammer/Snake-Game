@@ -64,22 +64,21 @@ public class GamePanel extends JPanel implements ActionListener {
     g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE); // apple
 
     for (int i = 0; i < bodyParts; i++) {
-        if (i == 0) { // head of snake is a different colour
-            g.setColor(new Color(0x4c9c4c)); //0x4c9c4c darker green
-            g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE); 
-        } else {
-            g.setColor(new Color(0x81c973)); //0x81c973 green
-            g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE); 
-        }
+      if (i == 0) { // head of snake is a different colour
+        g.setColor(new Color(0x4c9c4c)); // 0x4c9c4c darker green
+        g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+      } else {
+        g.setColor(new Color(0x81c973)); // 0x81c973 green
+        g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+      }
     }
-
   }
 
   public void newApple() {
     appleX =
         random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE))
             * UNIT_SIZE; // first part is random position (integer). second part is to scale based
-                         // on unit_size
+    // on unit_size
     appleY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
   }
 
@@ -107,23 +106,67 @@ public class GamePanel extends JPanel implements ActionListener {
 
   public void checkApple() {}
 
-  public void checkCollisions() {}
+  public void checkCollisions() {
+    // whether snake's head has collided against itself
+    for (int i = bodyParts; i > 0; i--) {
+      if ((x[0] == x[i]) && (y[0] == y[i])) {
+        running = false;
+      }
+    }
+
+    // whether snake's head has collided against the borders
+
+    if ((x[0] < 0) || (x[0] > SCREEN_WIDTH) || (y[0] < 0) || (y[0] > SCREEN_HEIGHT)) {
+      running = false;
+    }
+
+    if (!running) {
+      timer.stop();
+    }
+  }
 
   public void gameOver(Graphics g) {}
 
   // Fix: Implement the actionPerformed method
   public void actionPerformed(ActionEvent e) {
     if (running) {
-        move();
-        checkApple();
-        checkCollisions();
-
-    } 
+      move();
+      checkApple();
+      checkCollisions();
+    }
     repaint();
   }
 
   public class MyKeyAdapter extends KeyAdapter {
     @Override
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+      // arrow keys and WASD keys permitted for movement
+      switch (e.getKeyCode()) {
+        case KeyEvent.VK_LEFT:
+        case KeyEvent.VK_A:
+          if (direction != 'R') { // prevent snake from doubling up on itself
+            direction = 'L';
+          }
+          break;
+        case KeyEvent.VK_RIGHT:
+        case KeyEvent.VK_D:
+          if (direction != 'L') {
+            direction = 'R';
+          }
+          break;
+        case KeyEvent.VK_UP:
+        case KeyEvent.VK_W:
+          if (direction != 'D') {
+            direction = 'U';
+          }
+          break;
+        case KeyEvent.VK_DOWN:
+        case KeyEvent.VK_S:
+          if (direction != 'U') {
+            direction = 'D';
+          }
+          break;
+      }
+    }
   }
 }
