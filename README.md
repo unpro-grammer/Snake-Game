@@ -3,6 +3,8 @@ Objective: consume apples. Survive.
 
 Control the snake's movement using arrow keys or WASD keys.
 
+Press ENTER to restart.
+
 ## Language
 java 17.0.10
 
