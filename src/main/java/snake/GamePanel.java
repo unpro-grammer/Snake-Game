@@ -57,11 +57,12 @@ public class GamePanel extends JPanel implements ActionListener {
   public void draw(Graphics g) {
 
     if (running) {
-      for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
-        g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT); // vertical gridlines
-        g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE); // horizontal gridlines
-      }
-
+      /*
+           for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
+             g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT); // vertical gridlines
+             g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE); // horizontal gridlines
+           }
+      */
       g.setColor(new Color(0xeb4034)); // hex code of muted red
       g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE); // apple
 
@@ -74,9 +75,23 @@ public class GamePanel extends JPanel implements ActionListener {
           g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
         }
       }
+
+      displayScore(g);
+
     } else {
       gameOver(g);
     }
+  }
+
+  public void displayScore(Graphics g) {
+    // Display text for score
+    g.setColor(new Color(0xFFFFFF));
+    g.setFont(new Font("Century Gothic", Font.BOLD, 20));
+    FontMetrics metrics = getFontMetrics(g.getFont());
+    g.drawString(
+        "Score: " + applesEaten,
+        (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten)) / 2,
+        g.getFont().getSize()); // centre text
   }
 
   public void newApple() {
@@ -139,9 +154,15 @@ public class GamePanel extends JPanel implements ActionListener {
   public void gameOver(Graphics g) {
     // Display text for gameover
     g.setColor(new Color(0xc9283e));
-    g.setFont(new Font("Century Gothic", Font.BOLD, 75)); 
+    g.setFont(new Font("Century Gothic", Font.BOLD, 75));
     FontMetrics metrics = getFontMetrics(g.getFont());
-    g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2); // centre text
+    g.drawString(
+        "Game Over",
+        (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2,
+        SCREEN_HEIGHT / 2); // centre text
+
+    // Display text for final score
+    displayScore(g);
   }
 
   // Fix: Implement the actionPerformed method
