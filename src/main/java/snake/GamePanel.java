@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements ActionListener {
   Timer timer;
   Random random;
   private long lastKeyPressTime = 0;
-  private long delay = 15; // delay in milliseconds
+  private long delay = 25; // delay in milliseconds
 
   GamePanel() {
     random = new Random();
