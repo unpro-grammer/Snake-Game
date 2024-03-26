@@ -32,6 +32,8 @@ public class GamePanel extends JPanel implements ActionListener {
   boolean running = false;
   Timer timer;
   Random random;
+  private long lastKeyPressTime = 0;
+  private long delay = 15; // delay in milliseconds
 
   GamePanel() {
     random = new Random();
@@ -44,8 +46,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
   public void startGame() {
     for (int i = 0; i < bodyParts; i++) {
-        x[i] = 0;
-        y[i] = 0;
+      x[i] = 0;
+      y[i] = 0;
     }
     newApple();
     running = true;
@@ -182,6 +184,12 @@ public class GamePanel extends JPanel implements ActionListener {
   public class MyKeyAdapter extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
+
+      if (System.currentTimeMillis() - lastKeyPressTime < delay) {
+        return;
+      }
+      lastKeyPressTime = System.currentTimeMillis(); // prevent multiple key presses simultaneously
+
       // arrow keys and WASD keys permitted for movement
       switch (e.getKeyCode()) {
         case KeyEvent.VK_LEFT:
@@ -209,24 +217,20 @@ public class GamePanel extends JPanel implements ActionListener {
           }
           break;
         case KeyEvent.VK_ENTER:
-        if (!running) {
+          if (!running) {
             restart();
-        }
+          }
       }
     }
 
     public void restart() {
 
-
-
-        repaint();
-        running = true;
-        bodyParts = 6;
-        applesEaten = 0;
-        direction = 'R';
-        startGame();
-
-        
+      repaint();
+      running = true;
+      bodyParts = 6;
+      applesEaten = 0;
+      direction = 'R';
+      startGame();
     }
   }
 }
