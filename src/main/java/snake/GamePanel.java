@@ -64,11 +64,11 @@ public class GamePanel extends JPanel implements ActionListener {
     g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE); // apple
 
     for (int i = 0; i < bodyParts; i++) {
-        if (i == 0) {
-            g.setColor(new Color(0x4c9c4c));
+        if (i == 0) { // head of snake is a different colour
+            g.setColor(new Color(0x4c9c4c)); //0x4c9c4c darker green
             g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE); 
         } else {
-            g.setColor(new Color(0x81c973));
+            g.setColor(new Color(0x81c973)); //0x81c973 green
             g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE); 
         }
     }
@@ -85,7 +85,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
   public void move() {
     for (int i = bodyParts; i > 0; i--) {
-      x[i] = x[i = 1];
+      x[i] = x[i - 1];
       y[i] = y[i - 1];
     }
 
