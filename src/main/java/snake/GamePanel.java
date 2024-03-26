@@ -22,12 +22,12 @@ public class GamePanel extends JPanel implements ActionListener {
   static final int UNIT_SIZE = 25;
   static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
   static final int DELAY = 75;
-  final int x[] = new int[GAME_UNITS];
-  final int y[] = new int[GAME_UNITS];
+  final int x[] = new int[GAME_UNITS]; // x positions of snake
+  final int y[] = new int[GAME_UNITS]; // y positions of snake
   int bodyParts = 6;
   int applesEaten;
   int appleX; // x pos of apple
-  int appleY;
+  int appleY; // y pos of apple
   char direction = 'R'; // direction of snake
   boolean running = false;
   Timer timer;
@@ -43,6 +43,10 @@ public class GamePanel extends JPanel implements ActionListener {
   }
 
   public void startGame() {
+    for (int i = 0; i < bodyParts; i++) {
+        x[i] = 0;
+        y[i] = 0;
+    }
     newApple();
     running = true;
     timer = new Timer(DELAY, this);
@@ -204,7 +208,25 @@ public class GamePanel extends JPanel implements ActionListener {
             direction = 'D';
           }
           break;
+        case KeyEvent.VK_ENTER:
+        if (!running) {
+            restart();
+        }
       }
+    }
+
+    public void restart() {
+
+
+
+        repaint();
+        running = true;
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        startGame();
+
+        
     }
   }
 }
