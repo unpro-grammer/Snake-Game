@@ -10,6 +10,5 @@ Press ENTER to restart.
 ## Language
 java 17.0.10
 
-## FAQ (in advance)
-### Why does it sometimes GameOver when I press multiple keys near-simultaneously?
-Self-collision detects overlap between the snake's head and body. Apparently this happens momentarily, sometimes, when attempting to navigate quickly and rapidly.
+## Future improvements:
+Make self-collision detection smoother so that pressing keys near-simultaneously won't be registered as an instantaneous overlap.
