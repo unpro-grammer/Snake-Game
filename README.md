@@ -10,5 +10,5 @@ Press ENTER to restart.
 ## Language
 java 17.0.10
 
-## Future improvements:
+### Future Improvements
 Make self-collision detection smoother so that pressing keys near-simultaneously won't be registered as an instantaneous overlap.
